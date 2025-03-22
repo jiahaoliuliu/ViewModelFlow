@@ -17,6 +17,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -25,11 +26,11 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
-    private val flowViewModel: FlowViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val flowViewModel: FlowViewModel = viewModel()
             val uiState = flowViewModel.states.collectAsStateWithLifecycle()
             when (uiState.value) {
                 is UiState.Loaded -> SuccessUi(number = (uiState.value as UiState.Loaded).number)
