@@ -15,8 +15,4 @@ class GetRandomNumberUseCase(
             }
         }
     }
-
-    fun invoke(until: Int): Int {
-        return randomNumberRepository.getRandomNumber(until)
-    }
 }

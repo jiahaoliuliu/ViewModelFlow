@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,9 +36,28 @@ class MainActivity : ComponentActivity() {
             when (uiState.value) {
                 is UiState.Loaded -> SuccessUi(number = (uiState.value as UiState.Loaded).number)
                 is UiState.Error -> {}
-                UiState.Loading -> {}
+                UiState.Loading -> Loading()
             }
         }
+    }
+}
+
+@Composable
+fun Loading() {
+    ViewModelFlowTheme {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            content = { innerPadding ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+        )
     }
 }
 

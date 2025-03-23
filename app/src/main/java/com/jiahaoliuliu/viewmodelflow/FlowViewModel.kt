@@ -9,11 +9,10 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 
 class FlowViewModel(
-    private val savedStateHandle: SavedStateHandle = SavedStateHandle(),
+    savedStateHandle: SavedStateHandle = SavedStateHandle(),
     private val getRandomNumberUseCase: GetRandomNumberUseCase = GetRandomNumberUseCase()
 ) : ViewModel() {
 
