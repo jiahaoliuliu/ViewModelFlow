@@ -7,16 +7,16 @@ import kotlinx.coroutines.flow.flow
 class GetRandomNumberUseCase(
     private val randomNumberRepository: RandomNumberRepository = RandomNumberRepository()
 ) {
-    fun invokeFlow(): Flow<Int> {
+    fun invokeFlow(until: Int): Flow<Int> {
         return flow {
             while(true) {
                 delay(1_000)
-                emit(randomNumberRepository.getRandomNumber())
+                emit(randomNumberRepository.getRandomNumber(until))
             }
         }
     }
 
-    fun invoke(): Int {
-        return randomNumberRepository.getRandomNumber()
+    fun invoke(until: Int): Int {
+        return randomNumberRepository.getRandomNumber(until)
     }
 }
