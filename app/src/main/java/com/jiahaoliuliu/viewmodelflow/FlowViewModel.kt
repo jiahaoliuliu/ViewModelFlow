@@ -21,16 +21,18 @@ class FlowViewModel(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val states: StateFlow<UiState> =
-//        savedStateHandle.getStateFlow(MY_ID, initialValue = 1000)
-        fetchRequest.onStart {
-            fetchData()
-        }.flatMapLatest { backendData ->
-                flow {
-                    getRandomNumberUseCase.invokeFlow(1000)
-                        .take(2)
-                        .collect { value ->
-                            emit(UiState.Loaded(value))
-                        }
+        savedStateHandle.getStateFlow(MY_ID, initialValue = 1000)
+            .flatMapLatest { storedValue ->
+                fetchRequest.onStart {
+                    fetchData()
+                }.flatMapLatest { backendData ->
+                    flow {
+                        getRandomNumberUseCase.invokeFlow(storedValue)
+                            .take(2)
+                            .collect { value ->
+                                emit(UiState.Loaded(value))
+                            }
+                    }
                 }
             }.stateIn(
                 scope = viewModelScope,
@@ -42,6 +44,7 @@ class FlowViewModel(
         println("Fetching data")
         fetchRequest.tryEmit(Unit)
     }
+
     companion object {
         private const val MY_ID = "1234567890"
     }
