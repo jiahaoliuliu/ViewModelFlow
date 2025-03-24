@@ -28,7 +28,7 @@ class FlowViewModel(
                 }.flatMapLatest { backendData ->
                     flow {
                         getRandomNumberUseCase.invokeFlow(storedValue)
-                            .take(2)
+                            .take(1)
                             .collect { value ->
                                 emit(UiState.Loaded(value))
                             }
