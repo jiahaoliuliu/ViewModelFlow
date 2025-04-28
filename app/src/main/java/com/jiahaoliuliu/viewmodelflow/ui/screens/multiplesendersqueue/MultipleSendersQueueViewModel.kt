@@ -1,8 +1,10 @@
-package com.jiahaoliuliu.viewmodelflow
+package com.jiahaoliuliu.viewmodelflow.ui.screens.multiplesendersqueue
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jiahaoliuliu.viewmodelflow.GetRandomNumberUseCase
+import com.jiahaoliuliu.viewmodelflow.UiState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -13,7 +15,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.take
 
-class FlowViewModel(
+class MultipleSendersQueueViewModel(
     savedStateHandle: SavedStateHandle = SavedStateHandle(),
     private val getRandomNumberUseCase: GetRandomNumberUseCase = GetRandomNumberUseCase()
 ) : ViewModel() {
@@ -36,7 +38,7 @@ class FlowViewModel(
                 }
             }.stateIn(
                 scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
+                started = SharingStarted.Companion.WhileSubscribed(stopTimeoutMillis = 5_000),
                 initialValue = UiState.Loading
             )
 

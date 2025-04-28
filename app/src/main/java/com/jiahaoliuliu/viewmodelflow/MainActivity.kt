@@ -14,8 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.jiahaoliuliu.viewmodelflow.screens.MultipleSendersQueueActivity
-import com.jiahaoliuliu.viewmodelflow.screens.RandomNumberActivity
+import com.jiahaoliuliu.viewmodelflow.ui.screens.multiplesendersqueue.MultipleSendersQueueActivity
+import com.jiahaoliuliu.viewmodelflow.ui.screens.randomnumber.RandomNumberActivity
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

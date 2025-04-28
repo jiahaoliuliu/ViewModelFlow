@@ -13,10 +13,10 @@
         android:theme="@style/Theme.ViewModelFlow"
         tools:targetApi="31">
         <activity
-            android:name=".screens.RandomNumberActivity"
+            android:name=".ui.screens.randomnumber.RandomNumberActivity"
             android:exported="false" />
         <activity
-            android:name=".screens.MultipleSendersQueueActivity"
+            android:name=".ui.screens.multiplesendersqueue.MultipleSendersQueueActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

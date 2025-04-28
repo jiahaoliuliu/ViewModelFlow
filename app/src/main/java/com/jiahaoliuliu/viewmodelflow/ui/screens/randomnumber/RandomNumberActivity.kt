@@ -1,4 +1,4 @@
-package com.jiahaoliuliu.viewmodelflow.screens
+package com.jiahaoliuliu.viewmodelflow.ui.screens.randomnumber
 
 import android.content.Context
 import android.content.Intent
@@ -27,26 +27,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.jiahaoliuliu.viewmodelflow.FlowViewModel
 import com.jiahaoliuliu.viewmodelflow.UiState
 import com.jiahaoliuliu.viewmodelflow.ui.theme.ViewModelFlowTheme
 
-class MultipleSendersQueueActivity : ComponentActivity() {
+class RandomNumberActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModel: FlowViewModel by viewModels()
+        val viewModel: RandomNumberViewModel by viewModels()
         enableEdgeToEdge()
         setContent {
             val uiState = viewModel.states.collectAsStateWithLifecycle()
             ViewModelFlowTheme {
                 Scaffold(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.Companion.fillMaxSize(),
                     topBar = {
                         TopAppBar(
                             title = {
                                 Text(
-                                    text = "Multiple senders queue",
+                                    text = "Random number",
                                     fontSize = 20.sp
                                 )
                             },
@@ -63,10 +62,10 @@ class MultipleSendersQueueActivity : ComponentActivity() {
                     },
                     content = { innerPadding ->
                         Box(
-                            modifier = Modifier
+                            modifier = Modifier.Companion
                                 .fillMaxSize()
                                 .padding(innerPadding),
-                            contentAlignment = Alignment.Center
+                            contentAlignment = Alignment.Companion.Center
                         ) {
                             Content(uiState.value, viewModel)
                         }
@@ -78,13 +77,13 @@ class MultipleSendersQueueActivity : ComponentActivity() {
 
     companion object {
         fun createIntent(context: Context): Intent {
-            return Intent(context, MultipleSendersQueueActivity::class.java)
+            return Intent(context, RandomNumberActivity::class.java)
         }
     }
 }
 
 @Composable
-private fun Content(uiState: UiState, viewModel: FlowViewModel) {
+private fun Content(uiState: UiState, viewModel: RandomNumberViewModel) {
     when (uiState) {
         is UiState.Loaded -> {
             println("The number is ${uiState.number}")
@@ -103,13 +102,13 @@ private fun Content(uiState: UiState, viewModel: FlowViewModel) {
 private fun Loading() {
     ViewModelFlowTheme {
         Scaffold(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.Companion.fillMaxSize(),
             content = { innerPadding ->
                 Box(
-                    modifier = Modifier
+                    modifier = Modifier.Companion
                         .fillMaxSize()
                         .padding(innerPadding),
-                    contentAlignment = Alignment.Center
+                    contentAlignment = Alignment.Companion.Center
                 ) {
                     CircularProgressIndicator()
                 }
@@ -121,18 +120,18 @@ private fun Loading() {
 @Composable
 private fun SuccessUi(
     number: Int,
-    viewModel: FlowViewModel,
+    viewModel: RandomNumberViewModel,
 ) {
     ViewModelFlowTheme {
         Scaffold(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.Companion.fillMaxSize(),
             content = { innerPadding ->
                 Column(
-                    modifier = Modifier
+                    modifier = Modifier.Companion
                         .fillMaxSize()
                         .padding(innerPadding),
                     verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.Companion.CenterHorizontally
                 ) {
                     Text(
                         text = number.toString(),
