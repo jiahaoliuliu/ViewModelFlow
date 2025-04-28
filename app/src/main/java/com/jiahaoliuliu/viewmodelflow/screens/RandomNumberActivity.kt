@@ -32,17 +32,20 @@ class RandomNumberActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val uiState = viewModel.states.collectAsStateWithLifecycle()
-            when (uiState.value) {
-                is UiState.Loaded -> {
-                    println("The number is ${(uiState.value as UiState.Loaded).number}")
-                    SuccessUi(
-                        number = (uiState.value as UiState.Loaded).number,
-                        viewModel = viewModel
-                    )
-                }
-
-                is UiState.Error -> {}
-                UiState.Loading -> Loading()
+            ViewModelFlowTheme {
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    content = { innerPadding ->
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(innerPadding),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Content(uiState.value, viewModel)
+                        }
+                    }
+                )
             }
         }
     }
@@ -51,6 +54,22 @@ class RandomNumberActivity : ComponentActivity() {
         fun createIntent(context: Context): Intent {
             return Intent(context, RandomNumberActivity::class.java)
         }
+    }
+}
+
+@Composable
+private fun Content(uiState: UiState, viewModel: FlowViewModel) {
+    when (uiState) {
+        is UiState.Loaded -> {
+            println("The number is ${uiState.number}")
+            SuccessUi(
+                number = uiState.number,
+                viewModel = viewModel
+            )
+        }
+
+        is UiState.Error -> {}
+        UiState.Loading -> Loading()
     }
 }
 
