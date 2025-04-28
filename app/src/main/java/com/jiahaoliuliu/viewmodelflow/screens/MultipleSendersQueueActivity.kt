@@ -31,7 +31,7 @@ import com.jiahaoliuliu.viewmodelflow.FlowViewModel
 import com.jiahaoliuliu.viewmodelflow.UiState
 import com.jiahaoliuliu.viewmodelflow.ui.theme.ViewModelFlowTheme
 
-class RandomNumberActivity : ComponentActivity() {
+class MultipleSendersQueueActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +46,7 @@ class RandomNumberActivity : ComponentActivity() {
                         TopAppBar(
                             title = {
                                 Text(
-                                    text = "Random number",
+                                    text = "Multiple senders queue",
                                     fontSize = 20.sp
                                 )
                             },
@@ -78,7 +78,7 @@ class RandomNumberActivity : ComponentActivity() {
 
     companion object {
         fun createIntent(context: Context): Intent {
-            return Intent(context, RandomNumberActivity::class.java)
+            return Intent(context, MultipleSendersQueueActivity::class.java)
         }
     }
 }

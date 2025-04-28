@@ -16,6 +16,9 @@
             android:name=".screens.RandomNumberActivity"
             android:exported="false" />
         <activity
+            android:name=".screens.MultipleSendersQueueActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.ViewModelFlow">
