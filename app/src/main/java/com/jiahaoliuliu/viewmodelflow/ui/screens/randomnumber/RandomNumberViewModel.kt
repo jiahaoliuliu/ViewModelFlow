@@ -3,8 +3,8 @@ package com.jiahaoliuliu.viewmodelflow.ui.screens.randomnumber
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jiahaoliuliu.viewmodelflow.GetRandomNumberUseCase
-import com.jiahaoliuliu.viewmodelflow.UiState
+import com.jiahaoliuliu.viewmodelflow.domain.GetRandomNumberUseCase
+import com.jiahaoliuliu.viewmodelflow.ui.UiState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted

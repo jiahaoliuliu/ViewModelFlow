@@ -1,4 +1,4 @@
-package com.jiahaoliuliu.viewmodelflow
+package com.jiahaoliuliu.viewmodelflow.ui
 
 sealed class UiState {
     data object Loading: UiState()
