@@ -10,7 +10,9 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -25,9 +27,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.jiahaoliuliu.viewmodelflow.ui.UiState
 import com.jiahaoliuliu.viewmodelflow.ui.theme.ViewModelFlowTheme
 
 class MultipleSendersQueueActivity : ComponentActivity() {
@@ -38,6 +40,7 @@ class MultipleSendersQueueActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val uiState = viewModel.states.collectAsStateWithLifecycle()
+            val sourcesSet = viewModel.sourceStates.collectAsStateWithLifecycle()
             ViewModelFlowTheme {
                 Scaffold(
                     modifier = Modifier.Companion.fillMaxSize(),
@@ -61,13 +64,14 @@ class MultipleSendersQueueActivity : ComponentActivity() {
 
                     },
                     content = { innerPadding ->
-                        Box(
-                            modifier = Modifier.Companion
+                        Column(
+                            modifier = Modifier
                                 .fillMaxSize()
-                                .padding(innerPadding),
-                            contentAlignment = Alignment.Companion.Center
+                                .padding(innerPadding)
                         ) {
-                            Content(uiState.value, viewModel)
+                            RequestButtons(viewModel)
+//                            SourcesSet(sourcesSet.value)
+                            RandomNumberContent(uiState.value)
                         }
                     }
                 )
@@ -83,66 +87,101 @@ class MultipleSendersQueueActivity : ComponentActivity() {
 }
 
 @Composable
-private fun Content(uiState: UiState, viewModel: MultipleSendersQueueViewModel) {
+private fun RequestButtons(viewModel: MultipleSendersQueueViewModel) {
+    Row(Modifier.padding(16.dp)) {
+        Button(
+            modifier = Modifier
+                .weight(1f)
+                .padding(8.dp),
+            onClick = { viewModel.fetchData(Source.QUEUE_1) }) {
+            Text("Fetch 1")
+        }
+        Button(
+            modifier = Modifier
+                .weight(1f)
+                .padding(8.dp),
+            onClick = { viewModel.fetchData(Source.QUEUE_2) }) {
+            Text("Fetch 2")
+        }
+        Button(
+            modifier = Modifier
+                .weight(1f)
+                .padding(8.dp),
+            onClick = { viewModel.fetchData(Source.QUEUE_3) }) {
+            Text("Fetch  3")
+        }
+    }
+}
+
+@Composable
+private fun SourcesSet(sourcesSet: Set<Source>) {
+    println("Sources: $sourcesSet")
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "Sources: ${sourcesSet.joinToString(",")}",
+            fontSize = 20.sp
+        )
+    }
+}
+
+@Composable
+private fun RandomNumberContent(uiState: UiState) {
     when (uiState) {
+        UiState.Initial -> {}
+        is UiState.Loading -> Loading()
         is UiState.Loaded -> {
-            println("The number is ${uiState.number}")
+            println("The number is ${uiState.number} and the sources are ${uiState.sources}")
             SuccessUi(
                 number = uiState.number,
-                viewModel = viewModel
+                sourcesSet = uiState.sources
             )
         }
 
         is UiState.Error -> {}
-        UiState.Loading -> Loading()
     }
 }
 
 @Composable
 private fun Loading() {
-    ViewModelFlowTheme {
-        Scaffold(
-            modifier = Modifier.Companion.fillMaxSize(),
-            content = { innerPadding ->
-                Box(
-                    modifier = Modifier.Companion
-                        .fillMaxSize()
-                        .padding(innerPadding),
-                    contentAlignment = Alignment.Companion.Center
-                ) {
-                    CircularProgressIndicator()
-                }
-            }
-        )
+    Box(
+        modifier = Modifier.Companion
+            .fillMaxSize(),
+        contentAlignment = Alignment.Companion.Center
+    ) {
+        CircularProgressIndicator()
     }
 }
 
 @Composable
 private fun SuccessUi(
     number: Int,
-    viewModel: MultipleSendersQueueViewModel,
+    sourcesSet: Set<Source>
 ) {
-    ViewModelFlowTheme {
-        Scaffold(
-            modifier = Modifier.Companion.fillMaxSize(),
-            content = { innerPadding ->
-                Column(
-                    modifier = Modifier.Companion
-                        .fillMaxSize()
-                        .padding(innerPadding),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.Companion.CenterHorizontally
-                ) {
-                    Text(
-                        text = number.toString(),
-                        fontSize = 30.sp
-                    )
-
-                    Button(onClick = viewModel::fetchData) {
-                        Text("Fetch new number")
-                    }
-                }
-            }
+    Column(
+        modifier = Modifier.fillMaxSize().padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.Companion.CenterHorizontally
+    ) {
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = number.toString(),
+                fontSize = 30.sp
+            )
+        }
+        Text(
+            text = "Sources: ${sourcesSet.joinToString(",")}",
+            fontSize = 20.sp
         )
     }
 }

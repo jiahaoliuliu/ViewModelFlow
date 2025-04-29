@@ -1,4 +1,4 @@
-package com.jiahaoliuliu.viewmodelflow.ui
+package com.jiahaoliuliu.viewmodelflow.ui.screens.randomnumber
 
 sealed class UiState {
     data object Loading: UiState()
